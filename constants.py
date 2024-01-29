@@ -1,1 +1,1 @@
-OPTIONS = ['Get Country Information', 'Contact Us', 'Help']
+OPTIONS = ['Get Country Information', 'Generate QR' ,'Contact Us', 'Help']
