@@ -5,6 +5,8 @@ import string
 
 import constants
 from db_mysql import fatch_countries
+from get_api_data import get_country_data_from_api
+
 
 load_dotenv()
 
@@ -41,12 +43,11 @@ def handle_options(message):
 
     if selected_option == 'Get Country Information':
         get_char_for_find_country_list(user_chat_id, message)
-    elif selected_option == 'Generate QR':
-        generate_and_send_qr(user_chat_id, message)
     elif selected_option == 'Contact Us':
         contact_us(user_chat_id)
     elif selected_option == 'Help':
         help(user_chat_id)
+
 
 def get_char_for_find_country_list(user_chat_id, message):
     """
@@ -70,19 +71,12 @@ def  get_first_letter_of_country(message):
 def get_specifi_country(message):
     user_chat_id = message.chat.id
     country = fatch_countries.get_specific_country_details(message.text)
+    # {get_country_data_from_api(country[1])}
     country_data = f"""
-    Name : {country[1]}\nFlag : {country[3]}\nIndependent : {country[4]}\nOfficial_name : {country[6]}\nCapital City : {country[7]}\nContinent : {country[8]}\nMembers of : {country[9]}\nTotal Area : {country[11]}\nCurrency : {country[15].split("(")[0].strip()}\nCalling Code: {country[16]}\n Internet Tld : {country[17]}
+    Name : {country[1]} \nFlag : {country[3]}\nIndependent : {country[4]}\nOfficial_name : {country[6]}\nCapital City : {country[7]}\nContinent : {country[8]}\nMembers of : {country[9]}\nTotal Area : {country[11]}\nCurrency : {country[15].split("(")[0].strip()}\nCalling Code: {country[16]}\n Internet Tld : {country[17]}
     """
     bot.send_message(user_chat_id,country_data)
     bot.send_message(user_chat_id, "Start Again /start")
-
-def generate_and_send_qr(user_chat_id, message):
-    # Replace 'PATH_TO_PHOTO' with the path to the photo you want to send
-    photo_path = 'PATH_TO_PHOTO'
-
-    # Send the photo
-    with open(photo_path, 'rb') as photo:
-        bot.send_photo(user_chat_id, photo)
 
 
 def contact_us(user_chat_id):
